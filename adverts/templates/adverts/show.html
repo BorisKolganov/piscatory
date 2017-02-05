@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ advert.header }}
+                <small>{{ advert.price }}₽</small>
+            </h1>
+            <p>Номер: {{ advert.id }}, размещено: {{ advert.created }}</p>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <img src="{% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}" class="img-responsive img-rounded  center-block">
+                <hr/>
+{#                <p>#}
+{#                    Какая-то специальная информация#}
+{#                </p>#}
+{#                <hr/>#}
+                <p>{{ advert.text }}</p>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-lg btn-block">{{ advert.owner.phone }}</button>
+{#                <button type="button" class="btn btn-default btn-lg btn-block">Написать сообщение</button>#}
+                <br/>
+                <address>
+                    <strong>{{ advert.owner.get_full_name }}</strong><br/>
+                    г. {{ advert.city }}, {{ advert.address }}<br/>
+                </address>
+            </div>
+        </div>
+{#        <div class="row">#}
+{#            <div class="col-md-9">#}
+{#                <h3>Похожие объявления</h3>#}
+{#                {% for i in "1234" %}#}
+{#                    <div class="col-sm-3 col-md-3 col-xs-6">#}
+{#                        <div class="thumbnail">#}
+{#                            <img src="{% static 'core/img/default.jpg' %}" alt="">#}
+{#                            <div class="caption">#}
+{#                                <h3>Заголовок</h3>#}
+{#                                <p>Описание</p>#}
+{#                                <p><a href="{% url 'core:advert' %}" class="btn btn-primary"#}
+{#                                      role="button">Просмотреть</a></p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="row">#}
+{#            <div class="col-lg-12">#}
+{#                БЛОК ДЛЯ РЕКЛАМЫ#}
+{#                <br><br><br>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{% endblock %}
