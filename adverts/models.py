@@ -13,7 +13,7 @@ class AdvertManager(models.Manager):
     def get_best_adverts(self):
         l = list(self.get_showable().filter(is_best=True))
         random.shuffle(l)
-        return l[:3]
+        return l[:2]
 
 
 # Create your models here.

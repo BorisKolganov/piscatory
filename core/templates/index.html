@@ -21,8 +21,9 @@
                         <div class="col-sm-4 col-md-4 col-xs-4">
                             <div class="thumbnail">
                                 <img src="
+
                                         {% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}"
-                                     class="img-responsive" style="max-height: 250px;">
+                                     class="img-responsive" style="height: 252px; object-fit: cover;">
                                 <div class="caption">
                                     <h3>{{ advert.header }}</h3>
                                     <p>{{ advert.text }}</p>
@@ -38,7 +39,40 @@
                         {% endif %}
                     {% endfor %}
                     </div>
+                {% if is_paginated %}
+                    {% if selected_category %}
+                        {% url 'adverts:all' selected_subcategory as url %}
+                    {% else %}
+                        {% url 'adverts:index' as url %}
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4" style="text-align: center">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="{{ url }}?page=1" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    {% if page_obj.has_previous %}
+                                        <li><a href="{{ url }}?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                                    {% endif %}
+                                        <li><a href="{{ url }}?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+                                    {% if page_obj.has_next %}
+                                        <li><a href="{{ url }}?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                                    {% endif %}
+                                    <li>
+                                        <a href="{{ url }}?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
+
             <div class="col-md-3">
                 <div class="panel panel-danger">
                     <div class="panel-heading">
@@ -49,7 +83,7 @@
                             <div class="thumbnail">
                                 <img src="
                                         {% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}"
-                                     class="img-responsive" style="max-height: 250px;">
+                                     class="img-responsive" style="height: 221px; object-fit: cover;">
                                 <div class="caption">
                                     <h3>{{ advert.header }}</h3>
                                     <p>{{ advert.text }}</p>
@@ -58,7 +92,7 @@
                                     </p>
                                 </div>
                             </div>
-                    {% endfor %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

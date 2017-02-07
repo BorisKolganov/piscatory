@@ -2,22 +2,14 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import FormView
+from django.views.generic import RedirectView
 from django.views.generic import TemplateView
-from adverts.models import Advert, Category
 from core.forms import RegistrationForm, LoginForm
 from django.contrib.auth import logout, login
 
 
-class IndexView(TemplateView):
-    template_name = 'index.html'
-
-    def get_context_data(self, **kwargs):
-        adverts = Advert.objects.get_showable().order_by('-id')[:8]
-        return {
-            'adverts': adverts,
-            'categories': {c.id: c.name for c in Category.objects.all()},
-            'best_adverts': Advert.objects.get_best_adverts()
-        }
+class IndexView(RedirectView):
+    url = reverse_lazy('adverts:index')
 
 
 class AdvertView(TemplateView):

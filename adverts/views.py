@@ -65,15 +65,21 @@ class GetSubcategories(View):
 class ShowAdvertsView(ListView):
     template_name = 'index.html'
     context_object_name = 'adverts'
+    paginate_by = 6
 
     def get_queryset(self):
-        self.subcategory = get_object_or_404(SubCategory, pk=self.kwargs.get('pk'))
-        return Advert.objects.get_showable().filter(type=self.subcategory).order_by('-id')[:8]
+        subcategory_id = self.kwargs.get('pk')
+        if subcategory_id:
+            self.subcategory = get_object_or_404(SubCategory, pk=self.kwargs.get('pk'))
+            return Advert.objects.get_showable().filter(type__id=subcategory_id).order_by('-id')
+        else:
+            return Advert.objects.get_showable().order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super(ShowAdvertsView, self).get_context_data(**kwargs)
         context['categories'] = {c.id: c.name for c in Category.objects.all()}
         context['best_adverts'] = Advert.objects.get_best_adverts()
-        context['selected_category'] = self.subcategory.category.id
-        context['selected_subcategory'] = self.subcategory.id
+        if hasattr(self, 'subcategory') and self.subcategory:
+            context['selected_category'] = self.subcategory.category.id
+            context['selected_subcategory'] = self.subcategory.id
         return context
