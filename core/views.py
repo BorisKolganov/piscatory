@@ -15,7 +15,8 @@ class IndexView(TemplateView):
         adverts = Advert.objects.get_showable().order_by('-id')[:8]
         return {
             'adverts': adverts,
-            'categories': {c.id: c.name for c in Category.objects.all()}
+            'categories': {c.id: c.name for c in Category.objects.all()},
+            'best_adverts': Advert.objects.get_best_adverts()
         }
 
 

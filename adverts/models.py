@@ -1,12 +1,19 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
+import random
+
 from django.db import models
 
 
 class AdvertManager(models.Manager):
     def get_showable(self):
         return self.get_queryset().filter(is_moderated=True, is_active=True, is_sold=False)
+
+    def get_best_adverts(self):
+        l = list(self.get_showable().filter(is_best=True))
+        random.shuffle(l)
+        return l[:3]
 
 
 # Create your models here.
@@ -32,6 +39,7 @@ class Advert(models.Model):
     is_moderated = models.BooleanField(default=False, verbose_name=u'Объявление проверено')
     is_active = models.BooleanField(default=True, verbose_name=u'Объявление активно')
     is_sold = models.BooleanField(default=False, verbose_name=u'Товар продан')
+    is_best = models.BooleanField(default=False, verbose_name=u'Лучшее объявление (правый блок (проплачено))')
 
     def __unicode__(self):
         return (self.header + ' ' + self.text)[:150]

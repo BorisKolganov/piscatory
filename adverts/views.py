@@ -73,6 +73,7 @@ class ShowAdvertsView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ShowAdvertsView, self).get_context_data(**kwargs)
         context['categories'] = {c.id: c.name for c in Category.objects.all()}
+        context['best_adverts'] = Advert.objects.get_best_adverts()
         context['selected_category'] = self.subcategory.category.id
         context['selected_subcategory'] = self.subcategory.id
         return context
