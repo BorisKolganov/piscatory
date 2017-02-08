@@ -65,7 +65,7 @@ class GetSubcategories(View):
 class ShowAdvertsView(ListView):
     template_name = 'index.html'
     context_object_name = 'adverts'
-    paginate_by = 6
+    paginate_by = 20
 
     def get_queryset(self):
         subcategory_id = self.kwargs.get('pk')

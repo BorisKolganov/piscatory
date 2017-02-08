@@ -16,29 +16,26 @@
         <br/>
         <div class="row">
             <div class="col-md-9">
-                <div class="row">
-                    {% for advert in adverts %}
-                        <div class="col-sm-4 col-md-4 col-xs-4">
-                            <div class="thumbnail">
-                                <img src="
+                {% for advert in adverts %}
+                    <div class="media well">
+                        <div class="media-left media-middle">
+                            <a href="#">
+                                <img class="media-object" src="
+
 
                                         {% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}"
-                                     class="img-responsive" style="height: 252px; object-fit: cover;">
-                                <div class="caption">
-                                    <h3>{{ advert.header }}</h3>
-                                    <p>{{ advert.text }}</p>
-                                    <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
-                                          role="button">Просмотреть</a>
-                                    </p>
-                                </div>
-                            </div>
+                                     style="width: 128px; height: 128px;">
+                            </a>
                         </div>
-                        {% if forloop.counter|divisibleby:3 and not forloop.last %}
-                            </div>
-                            <div class="row">
-                        {% endif %}
-                    {% endfor %}
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ advert.header }}</h4>
+                            <p>{{ advert.text }}</p>
+                            <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
+                                  role="button">Просмотреть</a>
+                            </p>
+                        </div>
                     </div>
+                {% endfor %}
                 {% if is_paginated %}
                     {% if selected_category %}
                         {% url 'adverts:all' selected_subcategory as url %}
@@ -55,11 +52,15 @@
                                         </a>
                                     </li>
                                     {% if page_obj.has_previous %}
-                                        <li><a href="{{ url }}?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                                        <li>
+                                            <a href="{{ url }}?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                                        </li>
                                     {% endif %}
-                                        <li><a href="{{ url }}?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+                                    <li><a href="{{ url }}?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
                                     {% if page_obj.has_next %}
-                                        <li><a href="{{ url }}?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                                        <li>
+                                            <a href="{{ url }}?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                                        </li>
                                     {% endif %}
                                     <li>
                                         <a href="{{ url }}?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
@@ -74,25 +75,53 @@
             </div>
 
             <div class="col-md-3">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Лучшие объявления</h3>
+                <div class="row">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Лучшие объявления</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for advert in best_adverts %}
+                                <div class="thumbnail">
+                                    <img src="
+
+
+
+                                            {% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}"
+                                         class="img-responsive" style="height: 221px; object-fit: cover;">
+                                    <div class="caption">
+                                        <h3>{{ advert.header }}</h3>
+                                        <p>{{ advert.text }}</p>
+                                        <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
+                                              role="button">Просмотреть</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        {% for advert in best_adverts %}
+                </div>
+                <div class="row">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Реклама</h3>
+                        </div>
+                        <div class="panel-body">
                             <div class="thumbnail">
-                                <img src="
-                                        {% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}"
+                                <img src="{% static "core/img/advert1.png" %}"
                                      class="img-responsive" style="height: 221px; object-fit: cover;">
                                 <div class="caption">
-                                    <h3>{{ advert.header }}</h3>
-                                    <p>{{ advert.text }}</p>
-                                    <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
-                                          role="button">Просмотреть</a>
-                                    </p>
+                                    <h3>Рыболовная команда</h3>
                                 </div>
                             </div>
-                        {% endfor %}
+                            <div class="thumbnail">
+                                <img src="{% static "core/img/advert2.JPG" %}"
+                                     class="img-responsive" style="height: 221px; object-fit: cover;">
+                                <div class="caption">
+                                    <h3>Эхолот "Практик"</h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
