@@ -12,7 +12,7 @@ $(document).ready(function () {
         parents: "#category",
         url : "/adverts/get_subcategories/",
         loading : "Загрузка"
-    }, function () {
+    }).then(function () {
         subcategory.val(subcategory.data('selected'));
         subcategory.change();
         $('.selectpicker').selectpicker('refresh');
