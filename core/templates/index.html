@@ -2,27 +2,24 @@
 {% load static %}
 {% block content %}
     <div class="container">
-        <select id="category" class="selectpicker" data-selected="{{ selected_category }}">
+        <select id="category" class="selectpicker" data-selected="{{ selected_category }}" title="Категории">
             {% for key, value in categories.items %}
                 <option value="{{ key }}">{{ value }}</option>
             {% endfor %}
         </select>
-        <select id="subcategory" class="selectpicker" data-selected="{{ selected_subcategory }}">
-            <option value="" selected disabled>Подраздел</option>
+        <select id="subcategory" class="selectpicker" data-selected="{{ selected_subcategory }}" title="Подкатегории">
         </select>
         <a data-href-template="{% url 'adverts:all' 0 %}" class="btn btn-primary show-subcategory">Показать</a>
     </div>
     <div class="container">
         <br/>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-sm-8 col-md-9">
                 {% for advert in adverts %}
                     <div class="media well">
                         <div class="media-left media-middle">
                             <a href="#">
                                 <img class="media-object" src="
-
-
                                         {% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}"
                                      style="width: 128px; height: 128px;">
                             </a>
@@ -30,6 +27,7 @@
                         <div class="media-body">
                             <h4 class="media-heading">{{ advert.header }}</h4>
                             <p>{{ advert.text }}</p>
+                            <p><b>Стоимость:</b> {{ advert.price }}₽</p>
                             <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
                                   role="button">Просмотреть</a>
                             </p>
@@ -74,51 +72,53 @@
                 {% endif %}
             </div>
 
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Лучшие объявления</h3>
-                        </div>
-                        <div class="panel-body">
-                            {% for advert in best_adverts %}
-                                <div class="thumbnail">
-                                    <img src="
+            <div class="col-sm-4 col-md-3">
+                <div class="col-sm-12 col-xs-6">
+                    <div class="row">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Лучшие объявления</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% for advert in best_adverts %}
+                                    <div class="thumbnail">
+                                        <img src="
 
-
-
-                                            {% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}"
-                                         class="img-responsive" style="height: 221px; object-fit: cover;">
-                                    <div class="caption">
-                                        <h3>{{ advert.header }}</h3>
-                                        <p>{{ advert.text }}</p>
-                                        <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
-                                              role="button">Просмотреть</a>
-                                        </p>
+                                                {% if advert.photo %}{{ advert.photo.url }}{% else %}{% static 'core/img/default.jpg' %}{% endif %}"
+                                             class="img-responsive" style="height: 221px; object-fit: cover;">
+                                        <div class="caption">
+                                            <h3>{{ advert.header }}</h3>
+                                            <p>{{ advert.text }}</p>
+                                            <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
+                                                  role="button">Просмотреть</a>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Реклама</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="thumbnail">
-                                <img src="{% static "core/img/advert1.png" %}"
-                                     class="img-responsive" style="height: 221px; object-fit: cover;">
-                                <div class="caption">
-                                    <h3>Рыболовная команда</h3>
-                                </div>
+                <div class="col-sm-12 col-xs-6">
+                    <div class="row">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Реклама</h3>
                             </div>
-                            <div class="thumbnail">
-                                <img src="{% static "core/img/advert2.JPG" %}"
-                                     class="img-responsive" style="height: 221px; object-fit: cover;">
-                                <div class="caption">
-                                    <h3>Эхолот "Практик"</h3>
+                            <div class="panel-body">
+                                <div class="thumbnail">
+                                    <img src="{% static "core/img/advert1.png" %}"
+                                         class="img-responsive" style="height: 221px; object-fit: cover;">
+                                    <div class="caption">
+                                        <h3>Рыболовная команда</h3>
+                                    </div>
+                                </div>
+                                <div class="thumbnail">
+                                    <img src="{% static "core/img/advert2.JPG" %}"
+                                         class="img-responsive" style="height: 221px; object-fit: cover;">
+                                    <div class="caption">
+                                        <h3>Эхолот "Практик"</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>

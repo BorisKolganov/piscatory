@@ -12,13 +12,13 @@ $(document).ready(function () {
         parents: "#category",
         url : "/adverts/get_subcategories/",
         loading : "Загрузка"
-    }).then(function () {
-        subcategory.val(subcategory.data('selected')|| subcategory.val());
+    }, function () {
+        subcategory.val(subcategory.data('selected'));
         subcategory.change();
         $('.selectpicker').selectpicker('refresh');
     });
     var category = $('#category');
-    category.val(category.data('selected') || 1);
+    category.val(category.data('selected'));
     category.selectpicker('refresh');
     category.change();
 });

@@ -3,7 +3,7 @@
         {% for b in banners %}
             <div>
                 <a href="{{ b.image.url }}">
-                    <img class="img-rounded img-responsive" src="{{ b.image.url }}"  style="height: 300px; margin-left: 10px; margin-right: 10px;">
+                    <img class="img-rounded img-responsive" src="{{ b.image.url }}"  style="height: 300px; margin-left: 100px; margin-right: 100px;">
                 </a>
             </div>
         {% endfor %}
@@ -18,7 +18,7 @@
             infinite: true,
             variableWidth: true,
             autoplay: true,
-            autoplaySpeed: 8000
+            autoplaySpeed: 3000
         });
     });
 </script>
