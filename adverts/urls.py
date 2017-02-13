@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', AdvertView.as_view(), name='advert'),
     url(r'^get_categories/$', GetCategories.as_view(), name='categories'),
     url(r'^get_subcategories/(?P<pk>\d+)/$', GetSubcategories.as_view(), name='subcategories'),
-    url(r'^all/(?P<pk>\d+)/$', ShowAdvertsView.as_view(), name='all'),
-    url(r'^all/$', ShowAdvertsView.as_view(), name='index')
+    url(r'^all/$', ShowAdvertsView.as_view(), name='index'),
+    url(r'^all/(?P<category_id>\d+)/$', ShowAdvertsView.as_view(), name='category'),
+    url(r'^all/(?P<category_id>\d+)/(?P<subcategory_id>\d+)/$', ShowAdvertsView.as_view(), name='subcategory'),
 ]

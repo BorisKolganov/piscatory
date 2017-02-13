@@ -2,12 +2,10 @@
  * Created by Boris on 05.02.17.
  */
 $(document).ready(function () {
+    var category = $('#category');
     var subcategory = $('#subcategory');
-    subcategory.on('change', function () {
-        var subcategoryButton = $('.show-subcategory');
-        var hrefTemplate = subcategoryButton.data('href-template');
-        subcategoryButton.attr('href', hrefTemplate.replace('0', $(this).val()));
-    });
+    var showButton = $('.show-button');
+
     subcategory.remoteChained({
         parents: "#category",
         url : "/adverts/get_subcategories/",
@@ -17,7 +15,22 @@ $(document).ready(function () {
         subcategory.change();
         $('.selectpicker').selectpicker('refresh');
     });
-    var category = $('#category');
+
+    showButton.on('click', function () {
+        var hrefTemplate = undefined;
+        if (+subcategory.val()) {
+            hrefTemplate = $(this).data('href-subcategory-template');
+            hrefTemplate = hrefTemplate.replace('/0/', '/' + category.val() + '/');
+            hrefTemplate = hrefTemplate.replace('/0/', '/' + subcategory.val() + '/');
+            $(this).attr('href', hrefTemplate);
+        } else if (+category.val()) {
+            hrefTemplate = $(this).data('href-category-template');
+            hrefTemplate = hrefTemplate.replace('/0/', '/' + category.val() + '/');
+            $(this).attr('href', hrefTemplate);
+        } else {
+            $(this).attr('href', $(this).data('href-all'));
+        }
+    });
     category.val(category.data('selected'));
     category.selectpicker('refresh');
     category.change();

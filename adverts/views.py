@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+# coding=utf-8
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -58,7 +58,8 @@ class GetCategories(View):
 class GetSubcategories(View):
     def get(self, request, pk, *args, **kwargs):
         subcategories = SubCategory.objects.filter(category__id=pk)
-        context = {c.id: c.name for c in subcategories}
+        context = {0: u'Все подкатегории'}
+        context.update({c.id: c.name for c in subcategories})
         return JsonResponse(context)
 
 
@@ -68,10 +69,14 @@ class ShowAdvertsView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        subcategory_id = self.kwargs.get('pk')
+        subcategory_id = self.kwargs.get('subcategory_id')
+        category_id = self.kwargs.get("category_id")
         if subcategory_id:
-            self.subcategory = get_object_or_404(SubCategory, pk=self.kwargs.get('pk'))
-            return Advert.objects.get_showable().filter(type__id=subcategory_id).order_by('-id')
+            subcategory = get_object_or_404(SubCategory, pk=subcategory_id)
+            return Advert.objects.get_showable().filter(type=subcategory).order_by('-id')
+        elif category_id:
+            category = get_object_or_404(Category, pk=category_id)
+            return Advert.objects.get_showable().filter(type__category=category).order_by('-id')
         else:
             return Advert.objects.get_showable().order_by('-id')
 
@@ -79,7 +84,8 @@ class ShowAdvertsView(ListView):
         context = super(ShowAdvertsView, self).get_context_data(**kwargs)
         context['categories'] = {c.id: c.name for c in Category.objects.all()}
         context['best_adverts'] = Advert.objects.get_best_adverts()
-        if hasattr(self, 'subcategory') and self.subcategory:
-            context['selected_category'] = self.subcategory.category.id
-            context['selected_subcategory'] = self.subcategory.id
+        if self.kwargs.get("category_id"):
+            context['selected_category'] = self.kwargs.get("category_id")
+        if self.kwargs.get("subcategory_id"):
+            context['selected_subcategory'] = self.kwargs.get("subcategory_id")
         return context

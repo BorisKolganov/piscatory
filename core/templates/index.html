@@ -3,13 +3,14 @@
 {% block content %}
     <div class="container">
         <select id="category" class="selectpicker" data-selected="{{ selected_category }}" title="Категории">
+            <option value="0">Все категории</option>
             {% for key, value in categories.items %}
                 <option value="{{ key }}">{{ value }}</option>
             {% endfor %}
         </select>
         <select id="subcategory" class="selectpicker" data-selected="{{ selected_subcategory }}" title="Подкатегории">
         </select>
-        <a data-href-template="{% url 'adverts:all' 0 %}" class="btn btn-primary show-subcategory">Показать</a>
+        <a data-href-category-template="{% url 'adverts:category' 0 %}" data-href-subcategory-template="{% url 'adverts:subcategory' 0 0 %}" data-href-all="{% url "adverts:index" %}" class="btn btn-primary show-button">Показать</a>
     </div>
     <div class="container">
         <br/>
@@ -35,8 +36,10 @@
                     </div>
                 {% endfor %}
                 {% if is_paginated %}
-                    {% if selected_category %}
-                        {% url 'adverts:all' selected_subcategory as url %}
+                    {% if selected_subcategory %}
+                        {% url 'adverts:subcategory' selected_category selected_subcategory as url %}
+                    {% elif selected_category %}
+                        {% url 'adverts:category' selected_category as url %}
                     {% else %}
                         {% url 'adverts:index' as url %}
                     {% endif %}
