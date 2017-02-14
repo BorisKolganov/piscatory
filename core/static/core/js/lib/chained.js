@@ -53,13 +53,15 @@
                             /* Force updating the children to clear too. */
                             $(self).trigger("change");
                         }
+                        if (value) {
+                            request = $.getJSON(settings.url + value + '/', function (json) {
+                                build.call(self, json);
+                                /* Force updating the children. */
+                                $(self).trigger("change");
+                                resolve();
+                            });
+                        }
 
-                        request = $.getJSON(settings.url + value + '/', function (json) {
-                            build.call(self, json);
-                            /* Force updating the children. */
-                            $(self).trigger("change");
-                            resolve();
-                        });
                     });
 
                     /* If we have bootstrapped data given in options. */
