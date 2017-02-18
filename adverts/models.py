@@ -39,10 +39,14 @@ class Advert(models.Model):
     is_moderated = models.BooleanField(default=False, verbose_name=u'Объявление проверено')
     is_active = models.BooleanField(default=True, verbose_name=u'Объявление активно')
     is_sold = models.BooleanField(default=False, verbose_name=u'Товар продан')
-    is_best = models.BooleanField(default=False, verbose_name=u'Лучшее объявление (правый блок (проплачено))')
+    is_best = models.BooleanField(default=False, verbose_name=u'Лучшее объявление')
 
     def __unicode__(self):
         return (self.header + ' ' + self.text)[:150]
+
+    def delete(self, using=None, keep_parents=False):
+        self.is_active = False
+        self.save()
 
 
 class Category(models.Model):

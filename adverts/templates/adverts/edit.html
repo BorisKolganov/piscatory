@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container form">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="category">Категория: </label>
+                        <select id="category" class="selectpicker" data-selected="{{ advert.type.category_id }}"
+                                title="Категории">
+                            <option value="0">Все категории</option>
+                            {% for key, value in categories.items %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% if not form.errors.type %}
+                        <div class="form-group">
+                            <label for="subcategory">Подкатегория:</label>
+                            <select id="subcategory" class="selectpicker" data-selected="{{ form.type.value|default:advert.type_id }}"
+                                    title="Подкатегории" name="type">
+                            </select>
+                        </div>
+                    {% else %}
+                        <div class="form-group has-error">
+                            <label for="subcategory">Подкатегория:</label>
+                            <select id="subcategory" class="selectpicker" data-selected="{{ advert.type_id }}"
+                                    title="Подкатегории" name="type">
+                            </select>
+                            <span class="help-block">{{ form.errors.type.0 }}</span>
+                        </div>
+                    {% endif %}
+                    {% if not form.errors.header %}
+                        <div class="form-group">
+                            <label for="header">Заголовок:</label>
+                            <input type="text" class="form-control" id="header" name="header" placeholder="Заголовок" value="{{ form.header.value|default:advert.header }}">
+                        </div>
+                    {% else %}
+                        <div class="form-group has-error">
+                            <label for="header">Заголовок:</label>
+                            <input type="text" name="header" class="form-control" id="header" placeholder="Заголовок">
+                            <span class="help-block">{{ form.errors.header.0 }}</span>
+                        </div>
+                    {% endif %}
+
+                    {% if not form.errors.text %}
+                        <div class="form-group">
+                            <label for="text">Описание:</label>
+                            <textarea type="text" class="form-control" id="text" name="text"
+                                      placeholder="Описание">{{ form.text.value|default:advert.text }}</textarea>
+                        </div>
+                    {% else %}
+                        <div class="form-group has-error">
+                            <label for="text">Описание:</label>
+                            <textarea type="text" name="text" class="form-control" id="text"
+                                      placeholder="Описание"></textarea>
+                            <span class="help-block">{{ form.errors.text.0 }}</span>
+                        </div>
+                    {% endif %}
+
+
+                    <div class="form-group">
+                        <label for="photo">Фото:</label>
+                        <input type="file" class="form-control" id="photo" name="photo">
+                    </div>
+
+                    {% if not form.errors.city %}
+                        <div class="form-group">
+                            <label for="city">Город:</label>
+                            <input type="text" name="city" class="form-control" id="city" placeholder="Город" value="{{ form.city.value|default:advert.city }}">
+                        </div>
+                    {% else %}
+                        <div class="form-group has-error">
+                            <label for="city">Город:</label>
+                            <input type="text" name="city" class="form-control" id="city" placeholder="Город" value="">
+                            <span class="help-block">{{ form.errors.city.0 }}</span>
+                        </div>
+                    {% endif %}
+
+                    {% if not form.errors.address %}
+                        <div class="form-group">
+                            <label for="address">Адрес:</label>
+                            <input type="text" name="address" class="form-control" id="address" placeholder="Адрес" value="{{ form.address.value|default:advert.address }}">
+                        </div>
+                    {% else %}
+                        <div class="form-group has-error">
+                            <label for="address">Адрес:</label>
+                            <input type="text" name="address" class="form-control" id="address" placeholder="Адрес">
+                            <span class="help-block">{{ form.errors.address.0 }}</span>
+                        </div>
+                    {% endif %}
+
+
+                    {% if not form.errors.price %}
+                        <div class="form-group">
+                            <label for="price">Цена:</label>
+                            <input type="number" name="price" class="form-control" id="price" placeholder="Стоимость" value="{{ form.price.value|default:advert.price }}">
+                        </div>
+                    {% else %}
+                        <div class="form-group has-error">
+                            <label for="Price">Цена:</label>
+                            <input type="number" name="price" class="form-control" id="price" placeholder="Стоимость">
+                            <span class="help-block">{{ form.errors.price.0 }}</span>
+                        </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-default">Обновить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'adverts/js/advert_create.html.js' %}"></script>
+{% endblock %}

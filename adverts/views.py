@@ -1,4 +1,8 @@
 # coding=utf-8
+from django.http import Http404
+from django.http import HttpResponseBadRequest
+from django.http import HttpResponseForbidden
+from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -6,6 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import DeleteView
 from django.views.generic import ListView
 
 from adverts.models import Advert, Category, SubCategory
@@ -13,7 +18,7 @@ from adverts.forms import AdvertForm
 
 
 class AddAdvertView(CreateView):
-    template_name = 'adverts/advert_create.html'
+    template_name = 'adverts/create.html'
     form_class = AdvertForm
 
     def get_context_data(self, **kwargs):
@@ -45,7 +50,50 @@ class AdvertView(DetailView):
 
 
 class ChangeAdvertView(UpdateView):
-    pass
+    model = Advert
+    template_name = 'adverts/edit.html'
+    context_object_name = 'advert'
+    form_class = AdvertForm
+
+    def get_success_url(self):
+        return reverse_lazy('adverts:advert', args=[self.object.id])
+
+    def get_context_data(self, **kwargs):
+        context = super(ChangeAdvertView, self).get_context_data(**kwargs)
+        context['categories'] = {c.id: c.name for c in Category.objects.all()}
+        return context
+
+    def get_object(self, queryset=None):
+        advert = get_object_or_404(self.model, id=self.kwargs.get('pk'))
+        if self.request.user != advert.owner:
+            raise Http404()
+        return advert
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.is_moderated = False
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class DeleteAdvertView(DeleteView):
+    model = Advert
+    http_method_names = ['post']
+
+    def get_object(self, queryset=None):
+        advert = get_object_or_404(self.model, id=self.kwargs.get('pk'))
+        if self.request.user != advert.owner:
+            raise Http404()
+        return advert
+
+    def get_success_url(self):
+        return reverse_lazy('core:index')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return JsonResponse({'status': '302', 'redirect_url': success_url})
 
 
 class GetCategories(View):

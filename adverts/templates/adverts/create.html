@@ -15,13 +15,22 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="subcategory">Подкатегория:</label>
-                        <select id="subcategory" class="selectpicker" data-selected="{{ form.type.value }}"
-                                name="type">
-                            <option value="" selected disabled>Выбрать</option>
-                        </select>
-                    </div>
+                     {% if not form.errors.type %}
+                        <div class="form-group">
+                            <label for="subcategory">Подкатегория:</label>
+                            <select id="subcategory" class="selectpicker" data-selected="{{ form.type.value }}"
+                                    title="Подкатегории" name="type">
+                            </select>
+                        </div>
+                    {% else %}
+                        <div class="form-group has-error">
+                            <label for="subcategory">Подкатегория:</label>
+                            <select id="subcategory" class="selectpicker" data-selected=""
+                                    title="Подкатегории" name="type">
+                            </select>
+                            <span class="help-block">{{ form.errors.type.0 }}</span>
+                        </div>
+                    {% endif %}
                     {% if not form.errors.header %}
                         <div class="form-group">
                             <label for="header">Заголовок:</label>

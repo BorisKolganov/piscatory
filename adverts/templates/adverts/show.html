@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'core/css/sweetalert2.min.css' %}"/>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'core/js/lib/sweetalert2.min.js' %}"></script>
+{% endblock %}
 {% block content %}
     <div class="container">
         <div class="page-header">
@@ -9,6 +15,16 @@
             </h1>
 
             <p>Номер: {{ advert.id }}, размещено: {{ advert.created }}</p>
+            {% if request.user == advert.owner %}
+                <div>
+                    <a href="{% url 'adverts:edit' advert.id %}" class="btn btn-primary">Редактировать</a>
+                    <form action="{% url 'adverts:delete' advert.id %}" class="delete-form" style="display: inline-block">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" type="submit">Удалить</button>
+                    </form>
+
+                </div>
+            {% endif %}
 {#            <div class="pull-right btn-danger btn">Удалить</div>#}
         </div>
         <div class="row">
@@ -56,4 +72,5 @@
 {#            </div>#}
 {#        </div>#}
     </div>
+    <script src="{% static 'adverts/js/show.html.js' %}"></script>
 {% endblock %}

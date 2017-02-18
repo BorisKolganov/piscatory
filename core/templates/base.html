@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'core/css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/slick-theme.css' %}"/>
     <link rel="stylesheet" href="{% static 'core/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/custom.css' %}">
     {% block css %}{% endblock %}
 
     <script src="{% static 'core/js/lib/jquery.js' %}"></script>
@@ -57,9 +58,16 @@
     </div>
 {% endblock %}
 {% block content %}{% endblock %}
+<br/>
 <footer class="footer" style="background-color: lightgray">
     <div class="container">
-        <p class="text-muted"><a href="">rybakplus.ru</a></p>
+        <div style="display: inline-block; margin-top: 10px" >
+            Контактный тел: <a href="tel:+79259258242">+7-925-925-82-42</a><br/>
+            e-mail: <a href="mailto:rybakplus@mail.ru"> Rybakplus@mail.ru</a>
+        </div>
+        <div class="text-muted" style="display: inline-block; float: right; ">
+            <a href="">rybakplus.ru</a>
+        </div>
     </div>
 </footer>
 </body>
