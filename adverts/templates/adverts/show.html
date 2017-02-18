@@ -44,6 +44,7 @@
                 <address>
                     <strong>{{ advert.owner.get_full_name }}</strong><br/>
                     г. {{ advert.city }}, {{ advert.address }}<br/>
+                    e-mail: <a href="mailto:{{ advert.owner.email }}">{{ advert.owner.email }}</a>
                 </address>
             </div>
         </div>
