@@ -10,7 +10,7 @@
         </select>
         <select id="subcategory" class="selectpicker" data-selected="{{ selected_subcategory }}" title="Подкатегории">
         </select>
-        <a data-href-category-template="{% url 'adverts:category' 0 %}" data-href-subcategory-template="{% url 'adverts:subcategory' 0 0 %}" data-href-all="{% url "adverts:index" %}" class="btn btn-primary show-button">Показать</a>
+        <a data-href-category-template="{% url 'adverts:category' 0 %}" data-href-subcategory-template="{% url 'adverts:subcategory' 0 0 %}" data-href-all="{% url "adverts:index" %}" class="btn btn-success show-button">Показать</a>
     </div>
     <div class="container">
         <br/>
@@ -29,7 +29,7 @@
                             <h4 class="media-heading">{{ advert.header }}</h4>
                             <p>{{ advert.text }}</p>
                             <p><b>Стоимость:</b> {{ advert.price }}₽</p>
-                            <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
+                            <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-info"
                                   role="button">Просмотреть</a>
                             </p>
                         </div>
@@ -92,7 +92,7 @@
                                         <div class="caption">
                                             <h3 style="-moz-hyphens: auto;-webkit-hyphens: auto;-ms-hyphens: auto;">{{ advert.header }}</h3>
                                             <p style="-moz-hyphens: auto;-webkit-hyphens: auto;-ms-hyphens: auto;">{{ advert.text }}</p>
-                                            <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-primary"
+                                            <p><a href="{% url 'adverts:advert' advert.id %}" class="btn btn-info"
                                                   role="button">Просмотреть</a>
                                             </p>
                                         </div>
