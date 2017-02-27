@@ -37,7 +37,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name=u'Email', unique=True)
     first_name = models.CharField(verbose_name=u'Имя', max_length=30)
     last_name = models.CharField(verbose_name=u'Фамилия', null=True, blank=True, max_length=60)
-    phone = models.CharField(verbose_name=u'Номер телефона', max_length=60)
+    phone = models.CharField(verbose_name=u'Номер телефона', max_length=60, blank=True)
 
     is_staff = models.BooleanField(verbose_name=u'Персонал?', default=False)
     is_active = models.BooleanField(verbose_name=u'Активен?', default=True)
